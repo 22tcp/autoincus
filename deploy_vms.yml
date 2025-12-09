@@ -20,6 +20,7 @@
         msg: "Vault Data: {{ vault_ssh_pubkey }}"
       tags:
         - debug
+      when: "'debug' in ansible_run_tags"
 
     - name: Generate network-config cloud-init
       template:
