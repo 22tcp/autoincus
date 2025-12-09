@@ -1,0 +1,41 @@
+#cloud-config
+package_update: true
+package_upgrade: false
+packages:
+  - openssh-server
+
+write_files:
+  - path: /etc/systemd/system/ssh.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=OpenBSD Secure Shell server
+      After=network.target auditd.service
+      ConditionPathExists=!/etc/ssh/sshd_not_to_be_run
+      [Service]
+      ExecStart=/usr/sbin/sshd -D $SSHD_OPTS
+      EnvironmentFile=-/etc/default/ssh
+      KillMode=process
+      Restart=on-failure
+      [Install]
+      WantedBy=multi-user.target
+
+
+
+
+runcmd:
+ - systemctl daemon-reload
+ - systemctl enable ssh
+ - systemctl  start ssh
+ - usermod -p "" -s /usr/bin/bash ts
+ - passwd -u ts
+   
+users:
+  - name: ts
+    ssh_authorized_keys:
+      -  "{{ vault_ssh_pubkey }}"
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
+    lock_passwd: false
+
+ssh_pwauth: false

@@ -1,0 +1,8 @@
+[provider]
+localhost ansible_connection=local
+
+[redis]
+redis1 ansible_host=192.168.16.2 
+redis2 ansible_host=192.168.16.3 
+redis3 ansible_host=192.168.16.4 
+
