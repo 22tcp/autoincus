@@ -1,7 +1,8 @@
-Folks.
+Hello, Folks.
 
-It's a mess right now. Many things have to be turned into varibles, yet,
-but I needed a working range of reliably reachable instances spawned from an ansible inventory with FIXED IPs.
+Pre-alpha note. This is just a half-baked simulacrum of the idea right now. Lots of static nonsense that should be dynamically resolved.
+Still, I needed a working number of reliably reachable instances spawned from an ansible inventory with FIXED IPs becoming reachable from the outside.
+
 Basic flow is
 define two yaml files:
   - user+ssh login
@@ -17,6 +18,9 @@ Ansible runs through the given hostgroup and creates aforementioned files per ea
 then uses these as passed arguments for incus launch config.
 
 Todos
-  - cleanup /tmp after run
+  - do not rely on /tmp
   - make things dynamic, move stuff to ansible vars, 
   - create a role of it
+  - human linting
+
+Disclaimer. 0% AI text.
