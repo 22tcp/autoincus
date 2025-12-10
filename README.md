@@ -1,6 +1,7 @@
-Hello, Folks.
 
 Scope
+
+
 A local incus provisioning host spawns multiple containers for testing purposes ( example here, redis with sentinel )
 Deployment both of the container setup and redis shall be done by ansible playbooks.
 
