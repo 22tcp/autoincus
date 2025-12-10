@@ -1,10 +1,13 @@
-
-Scope
-
+Scope  
 
 A local incus provisioning host spawns multiple containers for testing purposes ( example here, redis with sentinel )
 Deployment both of the container setup and redis shall be done by ansible playbooks.
 
+Prerequisites
+ansible ( installed version of the official ansible deb repo )
+incus ( using zabbly lts )
+
+Tested on pop!OS 22.04 LTS 
 
 Basic flow 
 using two templates:
