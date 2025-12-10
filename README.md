@@ -1,10 +1,10 @@
 Hello, Folks.
 
-Pre-alpha note. This is just a half-baked simulacrum of the idea right now. Lots of static nonsense that should be dynamically resolved.
-Still, I needed a working number of reliably reachable instances spawned from an ansible inventory with FIXED IPs becoming reachable from the outside.
+Pre-alpha note. This is just a half-baked simulacrum of the whole idea right now. Lots of static nonsense that should be dynamically defined.
+Still, I wanted and do get a working number of reliably reachable instances spawned from an ansible inventory with FIXED IPs to ssh into with my user.
 
-Basic flow is
-define two yaml files:
+Basic flow 
+using two templates:
   - user+ssh login
   - networking setup
 
@@ -12,15 +12,12 @@ the hardcoded image is taken from incus images:debian/13/cloud  <- which has clo
 that's used for the alterations needed to be able to login with key exchange.
 The vault contains the public ssh key that is copied to the new user's ~./ssh folder.
 
-The cloud images also have a "all users are locked because no password" default.
+The cloud images feature a  "all users are locked because no password" default for security, good.
 
-Ansible runs through the given hostgroup and creates aforementioned files per each instance at the moment in /tmp
-then uses these as passed arguments for incus launch config.
+Ansible loops through the given hostgroup (redis)  and  hands the quoted yaml config for cloud-init to the incus launch --config options.
 
 Todos
-  - do not rely on /tmp
-  - make things dynamic, move stuff to ansible vars, 
+  - make more items dynamic eg transition to ansible vars, 
   - create a role of it
-  - human linting
 
 Disclaimer. 0% AI text.
