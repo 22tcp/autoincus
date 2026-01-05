@@ -1,16 +1,14 @@
 ---
-- name: Check for existing instance
+- name: Check if incus instance exists
   delegate_to: localhost
-  ansible.builtin.command:
-    cmd: incus info {{ inventory_hostname }}
-  register: incus_provision_info
-  failed_when: false
+  ansible.builtin.command: incus list --format=json
+  register: incus_list
   changed_when: false
-
+  run_once: true
 - name: Parse template into lookup
   delegate_to: localhost
-  when: incus_provision_info.rc != 0
   vars:
+    existing: "{{ incus_list.stdout | from_json | map(attribute='name') }}"
     vm_ip: "{{ ansible_host }}"
     login_config: "{{ lookup('template', 'templates/cloud-init.yaml.j2', vm_ip=vm_ip) }}"
     network_config: "{{ lookup('template', 'templates/cloud-net.yaml.j2', vm_ip=vm_ip) }}"
@@ -18,4 +16,5 @@
     incus launch images:debian/13/cloud {{ inventory_hostname }}
       --config=user.user-data={{ login_config | quote }}
       --config=user.network-config={{ network_config | quote }}
+  when: ansible_host not in existing
   changed_when: true
