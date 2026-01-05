@@ -3,11 +3,11 @@ Scope
 A local incus provisioning host spawns multiple containers for testing purposes ( example here, redis with sentinel )
 Deployment both of the container setup and redis shall be done by ansible playbooks.
 
-Versions as of Jan 2026
-ansible 2.16.3
+Versions as of Jan 2026  
+ansible 2.16.3  
 incus 6.20 ( using zabbly lts on pop!OS 24.04 LTS)
 
-News
+News  
 ran and implemented ansible-lint suggestions
 
 Basic flow  
