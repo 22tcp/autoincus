@@ -1,0 +1,16 @@
+---
+- name: Provision incus instances by inventory on localhost
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Import provisioning task
+      ansible.builtin.import_tasks: tasks/provision.yml
+  tags: incus
+
+- name: Bootstrap ssh access
+  hosts: localhost
+  gather_facts: true
+  tasks:
+    - name: Import ssh config includer
+      ansible.builtin.import_tasks: tasks/bootstrap_ssh.yml
+  tags: bootstrap

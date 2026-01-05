@@ -1,0 +1,23 @@
+---
+- name: Deploy incus instances by inventory on localhost
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Check if incus instance exists
+      ansible.builtin.command: incus list --format=json
+      register: incus_list
+      changed_when: false
+    - name: Parse template into lookup
+      vars:
+        incus_group: redis
+        existing: "{{ incus_list.stdout | from_json | map(attribute='name')  }}"
+        vm_ip: "{{ hostvars[item].ansible_host }}"
+        login_config: "{{ lookup('template', 'templates/cloud-init.yaml.j2', vm_ip=vm_ip) }}"
+        network_config: "{{ lookup('template', 'templates/cloud-net.yaml.j2', vm_ip=vm_ip) }}"
+      ansible.builtin.command: >
+        incus launch images:debian/13/cloud {{ item }}
+          --config=user.user-data={{ login_config | quote }}
+          --config=user.network-config={{ network_config | quote }}
+      loop: "{{ groups[incus_group] }}"
+      when: item not in existing
+      changed_when: true

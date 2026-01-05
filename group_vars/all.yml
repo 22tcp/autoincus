@@ -1,0 +1,2 @@
+incus_provision_user: ts
+ssh_public_key: "ssh-ed25519 xxxxxxxxxxxxxxxxxxdummy_real_value_in_vaultxxxxxxxxxxxxxxxx"

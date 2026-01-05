@@ -1,0 +1,21 @@
+---
+- name: Check for existing instance
+  delegate_to: localhost
+  ansible.builtin.command:
+    cmd: incus info {{ inventory_hostname }}
+  register: incus_provision_info
+  failed_when: false
+  changed_when: false
+
+- name: Parse template into lookup
+  delegate_to: localhost
+  when: incus_provision_info.rc != 0
+  vars:
+    vm_ip: "{{ ansible_host }}"
+    login_config: "{{ lookup('template', 'templates/cloud-init.yaml.j2', vm_ip=vm_ip) }}"
+    network_config: "{{ lookup('template', 'templates/cloud-net.yaml.j2', vm_ip=vm_ip) }}"
+  ansible.builtin.command: >
+    incus launch images:debian/13/cloud {{ inventory_hostname }}
+      --config=user.user-data={{ login_config | quote }}
+      --config=user.network-config={{ network_config | quote }}
+  changed_when: true
