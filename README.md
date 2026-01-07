@@ -36,7 +36,7 @@ after container init ansible is slurping two templates, it inserts variables to 
 
 Security
   attention - ssh credentials
-  The vault contains a testing only public ssh key that is copied to the newly enabled user's ~./ssh folder  - do not use the pubkey from this repo, it's quite openly available, replace with your own 
+  The vault contains a testing only public ssh key that is copied to the newly enabled user's ~./ssh folder  You need to add your own vault if you want to use this code.
 
 The cloud images feature an "all users are locked because no password" default for security which needs some configuring to prep for the following ansible configuration.
 
