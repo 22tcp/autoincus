@@ -3,10 +3,10 @@
 # ------------------
 
 {% for h in ansible_play_hosts_all | sort %}
-Host {{ h }}
-  HostName {{ hostvars[h].vm_ip }}
+Match Host {{ h }}
+  HostName {{ vm_ip }}
 	User {{ incus_provision_user }}
   StrictHostKeyChecking no
-  User_KnownHostsFile /dev/null
+  UserKnownHostsFile /dev/null
 
 {% endfor %}

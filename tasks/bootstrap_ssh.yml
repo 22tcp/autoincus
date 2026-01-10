@@ -1,10 +1,12 @@
 ---
 - name: Check presence of .ssh/config
+  delegate_to: localhost
   ansible.builtin.stat:
     path: ~/.ssh/config
   register: bootstrap_ssh_stat_result
 
 - name: Create the file, if it doesnt exist already
+  delegate_to: localhost
   ansible.builtin.file:
     path: ~/.ssh/config
     state: touch
@@ -13,16 +15,21 @@
   changed_when: true
 
 - name: Add include line
+  delegate_to: localhost
   ansible.builtin.lineinfile:
     path: "{{ lookup('env', 'HOME') }}/.ssh/config"
     line: "Include ansible-incus.conf"
+    insertbefore: "BOF"
     state: present
     create: true
     mode: '0600'
 
 - name: Add file from template
+  delegate_to: localhost
+  vars:
+    vm_ip: "{{ ansible_host }}"
   ansible.builtin.template:
-    src: templates/boostrap-incus-ssh.j2
-    dest: ~/.ssh/config/ansible-incus.conf
-    mode: '0660'
-    run_once: true
+    src: templates/bootstrap-incus-ssh.j2
+    dest: ~/.ssh/ansible-incus.conf
+    mode: '0600'
+  run_once: true

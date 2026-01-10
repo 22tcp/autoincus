@@ -8,8 +8,8 @@
   tags: incus
 
 - name: Bootstrap ssh access
-  hosts: localhost
-  gather_facts: true
+  hosts: all
+  gather_facts: false
   tasks:
     - name: Import ssh config includer
       ansible.builtin.import_tasks: tasks/bootstrap_ssh.yml
