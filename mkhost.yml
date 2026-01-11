@@ -14,3 +14,16 @@
     - name: Import ssh config includer
       ansible.builtin.import_tasks: tasks/bootstrap_ssh.yml
   tags: bootstrap
+
+- name: Wait for SSH to come up
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Warten auf sshservicestart
+      delegate_to: localhost
+      wait_for:
+        host: "{{ vm_ip | default(ansible_host) }}" 
+        port: 22
+        delay: 2
+        timeout: 120
+        state: started
