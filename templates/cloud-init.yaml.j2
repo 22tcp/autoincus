@@ -33,7 +33,7 @@ runcmd:
 users:
   - name: "{{ incus_provision_user }}"
     ssh_authorized_keys:
-      -  "{{ vault_ssh_pubkey }}"
+      -  "{{ incus_ssh_pubkey }}"
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: sudo
     lock_passwd: false
