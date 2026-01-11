@@ -1,3 +1,6 @@
+110126  using group var content with map to select deb12 or deb13 incus cloud image
+        created two template files adapting to 12 resp. 13
+
 110126  mv deploy_redis.yml to examples
 
 100126  mkhost bootstrap_ssh is working on the ~/.ssh/config 

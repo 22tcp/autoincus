@@ -1,7 +1,7 @@
 The idea  
 
 this is meant to tackle a typical lab situation for programming automation  
-for different applications/tools/infrastructures  
+of different applications/tools/infrastructures  
 
 A local incus provisioning host spawns multiple containers for testing purposes  
 Example here: redis with sentinel (wip)  
