@@ -1,0 +1,31 @@
+---
+# could be compacted into a shell call but.. this is nicer output
+- name: working directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME}}/{{ redis_builder_path }}"
+    state: directory
+    mode: '0750'
+
+- name: Download source tarball
+  ansible.builtin.get_url:
+    url: "{{ redis_builder_url }}"
+    dest: "{{ ansible_env.HOME}}/{{ redis_builder_target }}"
+    mode: '0644'
+
+- name: Extract Redis source
+  ansible.builtin.unarchive:
+    src: "{{ ansible_env.HOME }}/{{ redis_builder_target }}"
+    dest: "{{ ansible_env.HOME }}/{{ redis_builder_path }}"
+    remote_src: true
+
+
+- name: Compile redis components
+  ansible.builtin.command:
+    cmd: make -j "8" all
+  args:
+    chdir: "redis-{{ redis_builder_version }}"
+  environment:
+    BUILD_TLS: "yes"
+    BUILD_WITH_MODULES: "yes"
+    INSTALL_RUST_TOOLCHAIN: "yes"
+    DISABLE_WERRORS: "yes"

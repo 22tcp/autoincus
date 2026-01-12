@@ -19,5 +19,9 @@
     incus launch images:{{ incus_image_designator }} {{ inventory_hostname }}
       --config=user.user-data={{ login_config | quote }}
       --config=user.network-config={{ network_config | quote }}
+      -c limits.cpu={{ incus_image_cpu | default('2') }}
+      -c limits.memory={{ incus_image_mem | default('4GiB') }}
+      --device root,size={{ incus_image_root | default('8GiB') }}
+
   when: inventory_hostname not in existing
   changed_when: true

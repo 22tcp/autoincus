@@ -1,0 +1,7 @@
+---
+- name: Debug redis builder variables
+  hosts: all
+  gather_facts: true
+  roles:
+    - role: redis_builder
+      tags: debug

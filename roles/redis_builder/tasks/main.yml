@@ -1,0 +1,19 @@
+---
+- name: debug values
+  ansible.builtin.debug:
+    msg: 
+    - "Version string: {{redis_builder_version}}"
+    - "Path: {{ redis_builder_path }}"
+    - "Filename: {{ redis_builder_filename }}"
+    - "Target: {{ redis_builder_target }}"
+    - "URL: {{ redis_builder_url }}"  
+  tags: debug
+- name: Import Prerequisite task
+  ansible.builtin.import_tasks: prereq.yml
+  tags: [prereq]
+- name: Import builder task           
+  ansible.builtin.import_tasks: build.yml
+  tags: [build]
+#- name: Import deployment task
+#  ansible.builtin.import_tasks: repo.yml
+#  tags: [deploy]

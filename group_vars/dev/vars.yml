@@ -1,0 +1,3 @@
+incus_image_cpu: 4
+incus_image_mem: 4GiB
+incus_image_root: 16GiB

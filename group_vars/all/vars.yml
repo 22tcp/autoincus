@@ -1,3 +1,8 @@
 incus_provision_user: ts
 incus_ssh_pubkey: "ssh-ed25519 xxxxxxxxxxxxxxxxxxdummy_real_value_in_vaultxxxxxxxxxxxxxxxx"
 incus_image_designator: "debian/13/cloud"
+redis_builder_version: "8.4.0"
+redis_builder_path: "dev"
+redis_builder_filename: "redis-{{redis_builder_version}}.tar.gz"
+redis_builder_target: "{{redis_builder_path}}/{{redis_builder_filename}}"
+redis_builder_url: "https://github.com/redis/redis/archive/refs/tags/{{redis_builder_version}}.tar.gz"
