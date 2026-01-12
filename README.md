@@ -7,28 +7,34 @@ A local incus provisioning host spawns multiple containers for testing purposes
 Example here: redis with sentinel (wip)  
 Deployment both of the container setup and redis gets realized with ansible plays  
 
-Howto use:
-install given prerequisites below then run ansible-playbook mkhost.yml --limit redis or other hosts
-in group_vars/redis/vars.yml the os image is changed at the moment the provisioning config
-is aiming for debian 12/13
 
-Versions as of Jan 2026    
+
+Versions as of Jan 2026   
 
 ansible core 2.19.5  
 incus 6.20 ( using zabbly lts on pop!OS 24.04 LTS)  
 ansible-lint ~ ubuntu/noble  
 
 Incus Image  
-src images:debian/13/cloud  ( has cloud-init preinstalled )  
+src images:  
+* debian/12/cloud*  
+* debian/13/cloud*  
+
+*incus cloud = cloud-init preinstalled  
+
+Usage:
+install given prerequisites then run   
+ansible-playbook mkhost.yml --limit redis ( or other hosts )  
+as example, in group vars redis vars.yml the os image is redefined,  
+for now the provisioning config is aiming for incus debian 12/13 only, feel free to extend  
 
 
-plays  
+ansible plays 
 
-Examples 
-deploy-redis.yml  // quick prototype instancing for groups of hosts
+Examples/deploy-redis.yml  // quick prototype instancing for groups of hosts
 
-preparation for role construction  
-mkhost.yml  // works with inventory,  using --limit strongly recommended  
+
+mkhost.yml  // works with inventory,  use --limit
 
 Basic flow   
 incus creates all given instances, static IP comes from inventory  
