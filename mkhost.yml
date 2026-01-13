@@ -21,8 +21,8 @@
   tasks:
     - name: Warten auf sshservicestart
       delegate_to: localhost
-      wait_for:
-        host: "{{ vm_ip | default(ansible_host) }}" 
+      ansible.builtin.wait_for:
+        host: "{{ vm_ip | default(ansible_host) }}"
         port: 22
         delay: 2
         timeout: 120

@@ -13,7 +13,7 @@
       "debian/13/cloud": "templates/cloud-init-deb13.yaml.j2"
     existing: "{{ incus_list.stdout | from_json | map(attribute='name') }}"
     vm_ip: "{{ ansible_host }}"
-    login_config: "{{ lookup('template', cloud_init_template_map[incus_image_designator] , vm_ip=vm_ip) }}"
+    login_config: "{{ lookup('template', cloud_init_template_map[incus_image_designator], vm_ip=vm_ip) }}"
     network_config: "{{ lookup('template', 'templates/cloud-net.yaml.j2', vm_ip=vm_ip) }}"
   ansible.builtin.command: >
     incus launch images:{{ incus_image_designator }} {{ inventory_hostname }}
