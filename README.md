@@ -31,11 +31,14 @@ for now the provisioning config is aiming for incus debian 12/13 only, feel free
 
 ansible plays 
 
-Examples/deploy-redis.yml  // quick prototype instancing for groups of hosts
-
+Examples/deploy-redis.yml  // quick prototype instancing for groups of hostsi
 
 mkhost.yml  // works with inventory,  use --limit
-
+  
+ansible roles  
+  
+redis_builder, uses a given host to compile the stable Version ( 8.4.0 at the moment )  
+  
 Basic flow   
 incus creates all given instances, static IP comes from inventory  
 preparing for further automated configuration is done as follows.  
