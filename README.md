@@ -54,7 +54,7 @@ The cloud images feature an "all users are locked because no password" default f
 Ansible loops through the given hostgroup (redis)  and  hands the quoted yaml config for cloud-init to the incus launch --config options.  
 
 Future planning  
-  - replace play and in-situ tasks with roles  
+  - replace play and in-situ tasks with roles - check, work in progress
     creating a "quick" solution in a larger project ecosystem only goes so far  
 
 Generic Todos  
