@@ -4,6 +4,10 @@ this is meant to tackle a typical lab situation for programming automation
 of different applications/tools/infrastructures  
 
 A local incus provisioning host spawns multiple containers for testing purposes  
+  Emphasis really is on local, experimentally extents the .ssh/config with an include  
+  and write the include according to given hosts - not ideal, I might switch to  
+  incus list => include file content  
+
 Example here: redis with sentinel (wip)  
 Deployment both of the container setup and redis gets realized with ansible plays  
 
@@ -38,7 +42,9 @@ mkhost.yml  // works with inventory,  use --limit
 ansible roles  
   
 redis_builder, uses a given host to compile the stable Version ( 8.4.0 at the moment )  
-  
+Attention : the build process eats up a lot   
+of container RAM or diskspace depending on your additional cloud-init storage definitions, reserve at least 6GB (rust dev gets auto-installed by the src )   
+   
 Basic flow   
 incus creates all given instances, static IP comes from inventory  
 preparing for further automated configuration is done as follows.  
@@ -54,11 +60,6 @@ Security
 
 The cloud images feature an "all users are locked because no password" default for security which needs some configuring to prep for the following ansible configuration.  
 
-Ansible loops through the given hostgroup (redis)  and  hands the quoted yaml config for cloud-init to the incus launch --config options.  
-
-Future planning  
-  - replace play and in-situ tasks with roles - check, work in progress
-    creating a "quick" solution in a larger project ecosystem only goes so far  
 
 Generic Todos  
   - even more items dynamic eg transition to ansible vars   
@@ -76,7 +77,7 @@ I'm on it - in my spare time.
 Supplemental  
   
 Rough shell script to remove incus instances, testing  
-
+```bash
 incus list  
 for i in ` incus list | grep 'RUNNING' | awk '{ print $2 }' `   
 do  
@@ -84,14 +85,18 @@ do
 	incus delete $i  
 done  
 incus list  
+```
+
 
 source config examples for apt, remember to install their signing keys appropriately  
 
 file: ansible-ubuntu-ansible-noble.list  
+```apt
       deb https://ppa.launchpadcontent.net/ansible/ansible/ubuntu/ noble main  
       deb-src https://ppa.launchpadcontent.net/ansible/ansible/ubuntu/ noble main  
-
+```
 file: zabbly-incus-stable.sources  
+```apt
       Enabled: yes  
       Types: deb  
       URIs: https://pkgs.zabbly.com/incus/stable  
@@ -99,5 +104,21 @@ file: zabbly-incus-stable.sources
       Components: main  
       Architectures: amd64  
       Signed-By: /etc/apt/keyrings/zabbly.asc  
+```
+---
 
-This text is 100% organic meaning it contains 0% LLM
+tmux conf for convenience
+```bash
+set -g mouse on
+bind -n PageUp copy-mode -e \; send-keys -X page-up
+bind -n PageDown copy-mode -e \; send-keys -X page-down
+bind v split-window -h
+bind h split-window -v
+bind x kill-pane
+bind-key -n F5 select-pane -t -
+bind-key -n F8 select-pane -t +
+```
+
+
+
+This text is 100% organic, it contains 0% LLM

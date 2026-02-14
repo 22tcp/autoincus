@@ -18,6 +18,9 @@
     dest: "{{ ansible_env.HOME }}/{{ redis_builder_path }}"
     remote_src: true
 
+- name: Cleanup deps
+  ansible.builtin.command:
+    cmd: make distclean
 
 - name: Compile redis components
   ansible.builtin.command:
@@ -29,3 +32,4 @@
     BUILD_WITH_MODULES: "yes"
     INSTALL_RUST_TOOLCHAIN: "yes"
     DISABLE_WERRORS: "yes"
+    USE_SYSTEMD: "yes"
