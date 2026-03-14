@@ -4,6 +4,7 @@ redis_builder_prerequisites:
   - ca-certificates
   - wget
   - dpkg-dev
+  - pkg-config
   - gcc
   - g++
   - libc6-dev

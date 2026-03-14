@@ -21,12 +21,14 @@
 - name: Cleanup deps
   ansible.builtin.command:
     cmd: make distclean
-
+  args:
+    chdir: "{{ ansible_env.HOME}}/{{redis_builder_path}}/redis-{{ redis_builder_version }}"
+    
 - name: Compile redis components
   ansible.builtin.command:
     cmd: make -j "8" all
   args:
-    chdir: "redis-{{ redis_builder_version }}"
+    chdir: "{{ ansible_env.HOME}}/{{redis_builder_path}}/redis-{{ redis_builder_version }}"
   environment:
     BUILD_TLS: "yes"
     BUILD_WITH_MODULES: "yes"
