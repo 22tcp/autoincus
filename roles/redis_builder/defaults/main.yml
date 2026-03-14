@@ -24,3 +24,9 @@ redis_builder_prerequisites:
   - libtool
   - librust-libsystemd-dev
   - libsystemd-dev
+
+redis_builder_binaries:
+  - redis-server
+  - redis-cli
+  - redis-sentinel
+  - redis-benchmark

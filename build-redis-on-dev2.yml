@@ -1,0 +1,19 @@
+---
+# example after invoking host dev2 with mkhost.yml
+
+- name: wait for ssh to work
+  hosts: dev2
+  gather_facts: false
+  tasks:
+    - name: Warten auf ssh service
+      ansible.builtin.wait_for:
+        host: "{{ ansible_host }}"
+        port: 22
+        delay: 2
+        timeout: 300
+        state: started
+
+- name: install via role
+  hosts: dev2
+  roles:
+    - redis_builder
