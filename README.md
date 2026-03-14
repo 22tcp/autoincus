@@ -13,10 +13,10 @@ Deployment both of the container setup and redis gets realized with ansible play
 
 
 
-Versions as of Jan 2026   
+Versions as of March 2026   
 
-ansible core 2.19.5  
-incus 6.20 ( using zabbly lts on pop!OS 24.04 LTS)  
+ansible core 2.20.2  
+incus 6.21 ( using zabbly lts on pop!OS 24.04 LTS)  
 ansible-lint ~ ubuntu/noble  
 
 Incus Image  
@@ -41,7 +41,7 @@ mkhost.yml  // works with inventory,  use --limit
   
 ansible roles  
   
-redis_builder, uses a given host to compile the stable Version ( 8.4.0 at the moment )  
+redis_builder, uses a given host to compile the stable Version ( 8.6 at the moment )  
 Attention : the build process eats up a lot   
 of container RAM or diskspace depending on your additional cloud-init storage definitions, reserve at least 6GB (rust dev gets auto-installed by the src )   
    
