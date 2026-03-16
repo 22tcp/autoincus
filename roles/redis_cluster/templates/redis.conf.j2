@@ -1,0 +1,11 @@
+bind {{ redis_cluster_bind }}
+port {{ redis_cluster_port }}
+daemonize yes
+logfile {{ redis_cluster_log_dir }}/redis.log
+dir {{ redis_cluster_data_dir }}
+pidfile {{ redis_cluster_pid_dir }}/redis-server.pid
+
+# Replication — replicas point to primary
+{% if inventory_hostname != redis_cluster_primary %}
+replicaof {{ hostvars[redis_cluster_primary]['ansible_host'] }} {{ redis_cluster_port }}
+{% endif %}

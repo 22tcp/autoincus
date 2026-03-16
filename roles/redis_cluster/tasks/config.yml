@@ -1,0 +1,20 @@
+---
+- name: Deploy redis.conf
+  ansible.builtin.template:
+    src: redis.conf.j2
+    dest: "{{ redis_cluster_config_dir }}/redis.conf"
+    owner: "{{ redis_cluster_owner }}"
+    group: "{{ redis_cluster_group }}"
+    mode: '0640'
+  tags: config
+  become: true
+
+- name: Deploy sentinel.conf
+  ansible.builtin.template:
+    src: sentinel.conf.j2
+    dest: "{{ redis_cluster_config_dir }}/sentinel.conf"
+    owner: "{{ redis_cluster_owner }}"
+    group: "{{ redis_cluster_group }}"
+    mode: '0640'
+  tags: config
+  become: true

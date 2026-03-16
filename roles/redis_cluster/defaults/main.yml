@@ -1,0 +1,37 @@
+---
+# Version
+redis_cluster_version: "{{ redis_builder_version }}"
+
+# Installation paths
+redis_cluster_install_dir: /opt/redis
+redis_cluster_bin_dir: "{{ redis_cluster_install_dir }}/bin"
+redis_cluster_config_dir: "{{ redis_cluster_install_dir }}/etc"
+redis_cluster_data_dir: "{{ redis_cluster_install_dir }}/data"
+redis_cluster_log_dir: /var/log/redis
+redis_cluster_pid_dir: /var/run/redis
+
+# Ownership
+redis_cluster_owner: redis
+redis_cluster_group: redis
+
+# Network
+redis_cluster_port: 6379
+redis_cluster_sentinel_port: 26379
+redis_cluster_bind: "0.0.0.0"
+
+# Sentinel
+redis_cluster_sentinel_quorum: 2
+redis_cluster_sentinel_down_after_ms: 5000
+redis_cluster_sentinel_failover_timeout: 60000
+redis_cluster_sentinel_parallel_syncs: 1
+
+# Artefacts source
+redis_cluster_artefacts_dir: "./artefacts/redis-{{ redis_cluster_version }}"
+
+# Service behaviour
+redis_cluster_service_restart_policy: on-failure
+redis_cluster_service_restart_sec: 5
+
+# Feature toggles
+redis_cluster_enable_sentinel: true
+redis_cluster_daemonize: true

@@ -1,0 +1,16 @@
+---
+- name: Provision
+  ansible.builtin.import_tasks: provision.yml
+  tags: provision
+- name: Wait for ssh
+  ansible.builtin.import_tasks: wait_ssh.yml
+  tags: wait_ssh
+- name: Deploy binaries
+  ansible.builtin.import_tasks: binaries.yml
+  tags: binaries
+- name: Configure redis
+  ansible.builtin.import_tasks: config.yml
+  tags: config
+- name: Systemd service install
+  ansible.builtin.import_tasks: service.yml
+  tags: service

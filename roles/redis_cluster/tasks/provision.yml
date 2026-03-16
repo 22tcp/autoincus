@@ -1,0 +1,6 @@
+---
+# Delegate to localhost — incus runs on control node
+- name: Provision redis cluster nodes
+  ansible.builtin.import_tasks: tasks/provision.yml
+  delegate_to: localhost
+  tags: provision

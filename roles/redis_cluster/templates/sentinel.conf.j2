@@ -1,0 +1,8 @@
+port {{ redis_cluster_sentinel_port }}
+daemonize yes
+logfile {{ redis_cluster_log_dir }}/sentinel.log
+pidfile {{ redis_cluster_pid_dir}}/redis-sentinel.pid
+sentinel monitor redis-primary {{ hostvars[redis_cluster_primary]['ansible_host'] }} {{ redis_cluster_port }} 2
+sentinel down-after-milliseconds redis-primary {{ redis_cluster_sentinel_down_after_ms }}
+sentinel failover-timeout redis-primary {{ redis_cluster_sentinel_failover_timeout }}
+sentinel parallel-syncs redis-primary {{ redis_cluster_sentinel_parallel_syncs }}

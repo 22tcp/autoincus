@@ -38,8 +38,8 @@ ansible plays
 Examples/deploy-redis.yml  // quick prototype instancing for groups of hostsi
 
 mkhost.yml  // works with inventory,  use --limit
-  
-ansible roles  
+build_redis_on_dev2.yml // example for an existing host -   
+redis_cluster.yml   // installs redis and redis-sentinel +  systemd units, config, starts service
   
 redis_builder, uses a given host to compile the stable Version ( 8.6 at the moment )  
 Attention : the build process eats up a lot   
@@ -53,6 +53,8 @@ After container init ansible is slurping two templates, it inserts variables to 
   - user+ssh login   
   - networking setup   
 
+redis_cluster   -  takes given hosts, artefact - versions ( variable is 8.6 as of march  26) 
+                   templates for server and sentinel
 
 Security  
   attention - ssh credentials  
@@ -61,13 +63,7 @@ Security
 The cloud images feature an "all users are locked because no password" default for security which needs some configuring to prep for the following ansible configuration.  
 
 
-Generic Todos  
-  - even more items dynamic eg transition to ansible vars   
-  - structure this readme better, summarize more  
 
-Special tasks  
-  - compute redis host/cluster deployment in relation to host count,   
-    using a replication distribution rule ( a nice opportunity to make a deep-dive  )  
 
 Disclaimer.   
 This is a quick and dirty simulacrum of the whole idea right now.  

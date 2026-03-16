@@ -1,0 +1,8 @@
+---
+# example after invoking host dev2 with mkhost.yml
+
+- name: install via role
+  hosts: redis
+  gather_facts: false
+  roles:
+    - redis_cluster

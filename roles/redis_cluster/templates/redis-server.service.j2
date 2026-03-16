@@ -1,0 +1,30 @@
+[Unit]
+Description=Redis Server {{ inventory_hostname }}
+Documentation=https://redis.io/docs
+After=network.target
+Wants=network.target
+
+[Service]
+Type=forking
+User={{ redis_cluster_owner }}
+Group={{ redis_cluster_group }}
+
+ExecStart={{ redis_cluster_bin_dir }}/redis-server {{ redis_cluster_config_dir }}/redis.conf
+ExecStop={{ redis_cluster_bin_dir }}/redis-cli -p {{ redis_cluster_port }} shutdown
+ExecReload=/bin/kill -USR2 $MAINPID
+
+PIDFile={{ redis_cluster_pid_dir }}/redis-server.pid
+RuntimeDirectory=redis
+RuntimeDirectoryMode=0755
+
+# Restart behaviour
+Restart=on-failure
+RestartSec={{ redis_cluster_service_restart_sec }}
+TimeoutStopSec=30
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

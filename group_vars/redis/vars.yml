@@ -1,1 +1,6 @@
 incus_image_designator: "debian/12/cloud"
+redis_binaries:
+  - redis-server
+  - redis-cli
+  - redis-sentinel
+  - redis-benchmark

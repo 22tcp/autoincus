@@ -1,0 +1,40 @@
+---
+- name: Create redis group
+  ansible.builtin.group:
+    name: "{{ redis_cluster_group }}"
+    system: true
+    state: present
+  tags: config
+  become: true
+
+- name: Create redis user
+  ansible.builtin.user:
+    name: "{{ redis_cluster_owner }}"
+    group: "{{ redis_cluster_group }}"
+    system: true
+    shell: /usr/sbin/nologin
+    home: "{{ redis_cluster_data_dir }}"
+    create_home: false
+    state: present
+  tags: config
+  become: true
+
+- name: Deploy redis.conf
+  ansible.builtin.template:
+    src: redis.conf.j2
+    dest: "{{ redis_cluster_config_dir }}/redis.conf"
+    owner: "{{ redis_cluster_owner }}"
+    group: "{{ redis_cluster_group }}"
+    mode: '0640'
+  tags: config
+  become: true
+
+- name: Deploy sentinel.conf
+  ansible.builtin.template:
+    src: sentinel.conf.j2
+    dest: "{{ redis_cluster_config_dir }}/sentinel.conf"
+    owner: "{{ redis_cluster_owner }}"
+    group: "{{ redis_cluster_group }}"
+    mode: '0640'
+  tags: config
+  become: true

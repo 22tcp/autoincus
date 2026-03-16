@@ -1,0 +1,46 @@
+---
+- name: Create redis group
+  ansible.builtin.group:
+    name: "{{ redis_cluster_group }}"
+    system: true
+    state: present
+  tags: config
+  become: true
+
+- name: Create redis user
+  ansible.builtin.user:
+    name: "{{ redis_cluster_owner }}"
+    group: "{{ redis_cluster_group }}"
+    system: true
+    shell: /usr/sbin/nologin
+    home: "{{ redis_cluster_data_dir }}"
+    create_home: false
+    state: present
+  tags: config
+  become: true
+
+- name: Create Redis directory structure
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ redis_cluster_owner }}"
+    group: "{{ redis_cluster_group }}"
+    mode: '0755'
+  loop:
+    - "{{ redis_cluster_bin_dir }}"
+    - "{{ redis_cluster_config_dir }}"
+    - "{{ redis_cluster_data_dir }}"
+    - "{{ redis_cluster_log_dir }}"
+  tags: binaries
+  become: true
+
+- name: Copy Redis binaries to cluster nodes
+  ansible.builtin.copy:
+    src: "./artefacts/redis-{{ redis_cluster_version }}/{{ item }}"
+    dest: "{{ redis_cluster_bin_dir }}/{{ item }}"
+    owner: "{{ redis_cluster_owner }}"
+    group: "{{ redis_cluster_group }}"
+    mode: '0755'
+  loop: "{{ redis_binaries }}"
+  tags: binaries
+  become: true

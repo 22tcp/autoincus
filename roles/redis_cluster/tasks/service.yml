@@ -1,0 +1,51 @@
+---
+# Ensure PID directory exists
+- name: Create Redis PID directory
+  ansible.builtin.file:
+    path: "{{ redis_cluster_pid_dir }}"
+    state: directory
+    owner: "{{ redis_cluster_owner }}"
+    group: "{{ redis_cluster_group }}"
+    mode: '0755'
+  tags: service
+  become: true
+
+# Deploy systemd unit files
+- name: Deploy redis-server systemd unit
+  ansible.builtin.template:
+    src: redis-server.service.j2
+    dest: /etc/systemd/system/redis-server.service
+    owner: root
+    group: root
+    mode: '0644'
+  tags: service
+  become: true
+
+- name: Deploy redis-sentinel systemd unit
+  ansible.builtin.template:
+    src: redis-sentinel.service.j2
+    dest: /etc/systemd/system/redis-sentinel.service
+    owner: root
+    group: root
+    mode: '0644'
+  tags: service
+  become: true
+
+# Reload, enable and start
+- name: Enable and start Redis server
+  ansible.builtin.systemd:
+    name: redis-server
+    enabled: true
+    state: started
+    daemon_reload: true
+  tags: service
+  become: true
+
+- name: Enable and start Redis sentinel
+  ansible.builtin.systemd:
+    name: redis-sentinel
+    enabled: true
+    state: started
+    daemon_reload: true
+  tags: service
+  become: true

@@ -1,0 +1,10 @@
+---
+- name: Wait for SSH on cluster nodes
+  ansible.builtin.wait_for:
+    host: "{{ vm_ip | default(ansible_host) }}"
+    port: 22
+    delay: 2
+    timeout: 120
+    state: started
+  delegate_to: localhost
+  tags: wait_ssh

@@ -41,7 +41,7 @@
     src: "{{ansible_env.HOME}}/{{redis_builder_path}}/redis-{{ redis_builder_version }}/src/{{ item }}"
     dest: "./artefacts/redis-{{ redis_builder_version }}/{{ item }}"
     flat: yes
-  loop: "{{ redis_builder_binaries }}"
+  loop: "{{ redis_binaries | default(redis_builder_binaries) }}"
   tags:
     - artefacts
     

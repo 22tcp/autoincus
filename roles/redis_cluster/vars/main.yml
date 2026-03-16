@@ -1,0 +1,3 @@
+---
+# Primary node — first in group by convention
+redis_cluster_primary: "{{ groups['redis'][0] }}"
